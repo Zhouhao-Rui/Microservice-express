@@ -7,7 +7,7 @@ function CommentCreate({ postId }) {
     const submitContent = (e) => {
         e.preventDefault();
 
-        axios.post(`http://localhost:4002/posts/${postId}/comments`, {
+        axios.post(`http://localhost:4001/posts/${postId}/comments`, {
             content
         })
 

@@ -1,20 +1,26 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-function CommentList({ postId }) {
-    const [comments, setComments] = useState([])
-    useEffect(() => {
-        axios.get(`http://localhost:4002/posts/${postId}/comments`).then(res => {
-            setComments(res.data)
-        })
-    }, [])
+function CommentList({ comments }) {
     return (
         <div>
             <h5>Comment</h5>
             {
-                comments.length && comments.map((comment, index) => (
-                    <li key={comment.id}>{comment.content}</li>
-                ))
+                comments.length && comments.map((comment, index) => {
+                    if (comment.status === 'pending') {
+                        return (
+                            <li key={comment.id}>{comment.content + '--- awaiting moderation'}</li>
+                        )
+                    } else if (comment.status === 'approved') {
+                        return (
+                            <li key={comment.id}>{comment.content + '--- approved'}</li>
+                        )
+                    } else {
+                        return (
+                            <li key={comment.id}>{comment.content + '--- Rejected'}</li>
+                        )
+                    }
+
+                })
             }
         </div>
     )
